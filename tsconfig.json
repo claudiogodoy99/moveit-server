@@ -22,7 +22,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@data/*": ["./src/data/*"]
+      "@data/*": ["./src/data/*"],
+      "@models/*": ["./src/models/*"]
     }
   },
   "include": [
