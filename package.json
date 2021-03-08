@@ -1,24 +1,37 @@
 {
-  "name": "moveit-next",
-  "version": "0.1.0",
-  "private": true,
+  "name": "moveit-server",
+  "version": "0.0.1",
+  "description": "back-end moveit react app ",
+  "main": "index.js",
+  "repository": "https://github.com/claudiogodoy99/moveit-server.git",
+  "author": "Claudio Godoy <40471021+claudiogodoy99@users.noreply.github.com>",
+  "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored"
   },
   "dependencies": {
-    "js-cookie": "^2.2.1",
-    "next": "10.0.7",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "eslint": "^7.12.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.19"
   },
   "devDependencies": {
-    "@types/js-cookie": "^2.2.6",
-    "@types/node": "^14.14.31",
-    "@types/react": "^17.0.2",
-    "@types/react-dom": "^17.0.1",
-    "node": "^15.8.0",
-    "typescript": "^4.2.2"
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.13.8",
+    "@babel/node": "^7.13.0",
+    "@babel/preset-env": "^7.13.9",
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/express": "^4.17.11",
+    "@types/mongoose": "^5.10.3",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "ts-node-dev": "^1.1.6",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.2.3"
   }
 }
