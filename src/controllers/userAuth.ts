@@ -1,22 +1,32 @@
-import express from 'express'
+import express, { Request } from 'express'
 import User from '@models/User'
 
 const router = express.Router()
 
-router.post('/register', async (request, response) => {
+const emailExistis = async (request: Request) => {
   const { email } = request.body
+  return User.findOne({ email })
+}
 
+router.post('/register', async (request, response) => {
   try {
-    if (await User.findOne({ email })) {
-      return response.status(400).json({
-        error: 'User Already exists'
-      })
+    if (await emailExistis(request)) {
+      return response.status(400).json({ error: 'This email already existis ' })
     }
 
-    const user = await User.create(request.body)
-    user.password = ''
+    const {
+      email,
+      name,
+      createAt,
+      _id
+    } = await User.create(request.body)
 
-    return response.status(201).json(user)
+    return response.status(201).json({
+      email,
+      name,
+      createAt,
+      _id
+    })
   } catch (err) {
     console.log(err)
     return response.status(400).json({ error: 'Register failed' })
