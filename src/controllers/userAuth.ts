@@ -14,8 +14,11 @@ router.post('/register', async (request, response) => {
     }
 
     const user = await User.create(request.body)
+    user.password = ''
+
     return response.status(201).json(user)
   } catch (err) {
+    console.log(err)
     return response.status(400).json({ error: 'Register failed' })
   }
 })

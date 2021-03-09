@@ -1,5 +1,20 @@
 import mongoose from '@data/connection'
 import bcrypt from 'bcryptjs'
+import { Document } from 'mongoose'
+
+interface IUserModel{
+  name: String,
+  email:String,
+  password: String,
+  createAt: Date,
+  level?: Number,
+  xp?: Number,
+  completedChallenges?: Number,
+  rankingPosition?: Number
+}
+
+export interface UserModel extends IUserModel, Document {
+}
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -41,13 +56,13 @@ const userSchema = new mongoose.Schema({
   }
 })
 
-userSchema.pre('save', async function (next) {
-  const creatingObj:any = this
+userSchema.pre<UserModel>('save', async function (next) {
+  let { password } = this
 
-  const hash = await bcrypt.hash(creatingObj.password, 10)
-  creatingObj.password = hash
+  const hash = await bcrypt.hash(String(password), 10)
+  password = hash
 
   next()
 })
 
-export default mongoose.model('user', userSchema)
+export default mongoose.model<UserModel>('user', userSchema)
