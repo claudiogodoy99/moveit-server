@@ -23,7 +23,8 @@
     "baseUrl": ".",
     "paths": {
       "@data/*": ["./src/data/*"],
-      "@models/*": ["./src/models/*"]
+      "@models/*": ["./src/models/*"],
+      "@controllers/*": ["./src/controllers/*"]
     }
   },
   "include": [

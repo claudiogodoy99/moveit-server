@@ -1,9 +1,11 @@
 import mongoose from 'mongoose'
+import 'dotenv/config'
 
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb+srv://cgodoy:123@cluster0.jfqwo.mongodb.net/moveit?retryWrites=true&w=majority', {
+mongoose.connect(String(process.env.MONGODB ?? ''), {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 })
 
 export default mongoose
