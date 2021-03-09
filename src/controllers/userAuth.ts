@@ -12,7 +12,7 @@ const getByEmail = async (request: Request) => {
 }
 
 const generateJwtToken = (user: UserModel) => {
-  jwt.sign({
+  return jwt.sign({
     _id: user._id
   }, config.secret,
   {

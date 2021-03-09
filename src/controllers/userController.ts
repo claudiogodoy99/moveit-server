@@ -1,7 +1,10 @@
 import User, { UserModel } from '@models/User'
 import express from 'express'
+import authMiddleware from '@middlewares/auth'
 
 const router = express.Router()
+
+router.use(authMiddleware)
 
 const completeChallenge = (user :UserModel, amount:number):UserModel => {
   const experienceToNextLevel = Math.pow((user.profile.level + 1) * 4, 2)
@@ -19,8 +22,8 @@ const completeChallenge = (user :UserModel, amount:number):UserModel => {
   return user
 }
 
-router.put('/:_id/completechallenge', async (request, response) => {
-  const _id = request.params._id
+router.put('/completechallenge', async (request, response) => {
+  const _id = request.query.userId
 
   const {
     challengeAmount
@@ -28,13 +31,17 @@ router.put('/:_id/completechallenge', async (request, response) => {
 
   let user = await User.findById({ _id })
 
-  if (!user) { return response.json(400).json({ error: 'User not found' }) }
+  if (!user) { return response.status(400).json({ error: 'User not found' }) }
 
   user = completeChallenge(user, Number(challengeAmount))
 
   await User.replaceOne({ _id }, user)
 
   return response.json(user.profile)
+})
+
+router.get('', (request, response) => {
+
 })
 
 const UserController = (app: any) => app.use('/user', router)
