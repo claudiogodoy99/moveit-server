@@ -8,10 +8,10 @@ interface IUserModel{
   password: String,
   createAt: Date,
   profile:{
-    level?: Number,
-    xp?: Number,
-    completedChallenges?: Number,
-    rankingPosition?: Number
+    level: number,
+    experience: number,
+    completedChallenges: number,
+    rankingPosition: number
   }
 }
 
@@ -38,13 +38,12 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   },
   profile: {
-
     level: {
       type: Number,
       default: 1,
       require: false
     },
-    xp: {
+    experience: {
       type: Number,
       default: 0,
       require: false
@@ -63,10 +62,8 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre<UserModel>('save', async function (next) {
-  let { password } = this
-
-  const hash = await bcrypt.hash(String(password), 10)
-  password = hash
+  const hash = await bcrypt.hash(String(this.password), 10)
+  this.password = hash
 
   next()
 })

@@ -1,0 +1,42 @@
+import User, { UserModel } from '@models/User'
+import express from 'express'
+
+const router = express.Router()
+
+const completeChallenge = (user :UserModel, amount:number):UserModel => {
+  const experienceToNextLevel = Math.pow((user.profile.level + 1) * 4, 2)
+
+  let finalExperience = user.profile.experience + amount
+
+  if (finalExperience > experienceToNextLevel) {
+    finalExperience = finalExperience - experienceToNextLevel
+    user.profile.level += 1
+  }
+
+  user.profile.experience = finalExperience
+  user.profile.completedChallenges += 1
+
+  return user
+}
+
+router.put('/:_id/completechallenge', async (request, response) => {
+  const _id = request.params._id
+
+  const {
+    challengeAmount
+  } = request.body
+
+  let user = await User.findById({ _id })
+
+  if (!user) { return response.json(400).json({ error: 'User not found' }) }
+
+  user = completeChallenge(user, Number(challengeAmount))
+
+  await User.replaceOne({ _id }, user)
+
+  return response.json(user.profile)
+})
+
+const UserController = (app: any) => app.use('/user', router)
+
+export default UserController
