@@ -29,7 +29,7 @@ router.put('/completechallenge', async (request, response) => {
     challengeAmount
   } = request.body
 
-  let user = await User.findById({ _id })
+  let user = await User.findById({ _id }).select('+password')
 
   if (!user) { return response.status(400).json({ error: 'User not found' }) }
 
@@ -38,10 +38,6 @@ router.put('/completechallenge', async (request, response) => {
   await User.replaceOne({ _id }, user)
 
   return response.json(user.profile)
-})
-
-router.get('', (request, response) => {
-
 })
 
 const UserController = (app: any) => app.use('/user', router)
