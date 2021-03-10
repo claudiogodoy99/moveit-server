@@ -11,7 +11,7 @@
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "debug": "ts-node-dev --inspect -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify   src/server.ts",
     "heroku-postbuild": "npm run build",
-    "start": "npm run build && node ./dist/server.js"
+    "start": "node ./dist/server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
