@@ -15,6 +15,7 @@ const generateJwtToken = (user: UserModel) => {
   return jwt.sign({
     _id: user._id
   }, config.secret,
+                  
   {
     expiresIn: 86400
   })
